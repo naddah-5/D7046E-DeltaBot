@@ -1,6 +1,8 @@
 # D7046E-DeltaBot
 A ANN based chatbot project for the course D7046E.
+
 ---------------------------------------------------------
+
 10-2-2023 Meeting Agenda and Notes
 Participating members: Everyone
 
