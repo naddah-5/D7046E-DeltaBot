@@ -4,6 +4,7 @@ A ANN based chatbot project for the course D7046E.
 ---------------------------------------------------------
 
 14-2-2023 Meeting Agenda
+
 Participants: Anders, Tobias, Jeremy, Lukas
 
 - Status report
@@ -25,6 +26,7 @@ Participants: Anders, Tobias, Jeremy, Lukas
 ---------------------------------------------------------
 
 10-2-2023 Meeting Agenda and Notes
+
 Participating members: Anders, Tobias, Jeremy, Lukas
 
 - Introductions etc.
