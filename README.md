@@ -9,8 +9,8 @@ Participants: Anders, Tobias, Jeremy, Lukas
 
 - Status report
   - Status off ANN 2
-    -Most are done
-  -Individual environments
+    - Most are done
+  - Individual environments
     - Wip 
   - Project breakdown
     - Parser
