@@ -3,7 +3,7 @@ This is a guide on how to set up the anaconda environment used for development i
 ## Pre-requisites
 It is assumed that anaconda is installed on the system already, anaconda is available for download [here](https://www.anaconda.com/products/distribution).
 
-## Windows
+## Installation
 From the anaconda navigator, navigate to the environments overview. 
 
 <img src="images\anaconda_environment.PNG"  width="250" height="300">
