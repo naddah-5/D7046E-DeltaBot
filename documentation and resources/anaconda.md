@@ -27,3 +27,6 @@ In order to then install pytorch in the environment, enter the command:
 > conda install pytorch torchvision torchaudio pytorch-cuda=11.6 -c pytorch -c nvidia
 
 This will take some time since it solves for version conflicts in the libraries and all their dependencies. Once this process is complete a set of compatible versions will be suggested and you are prompted to decide if you want to install them. Simply press enter.
+
+After the base environment is installed, install the remaining pip dependencies by running the following command from the projects root folder:
+> pip install -r requirements.txt
