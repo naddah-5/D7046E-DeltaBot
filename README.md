@@ -51,3 +51,29 @@ Participating members: Anders, Tobias, Jeremy, Lukas
 
 
 -----------------------------------------------------------
+
+21-2-2023 Meeting Agenda
+
+Participants: Lukas, Tobbe, Anders, Jeremy
+
+- Status report
+  - Documentation
+    - Requirements tbd
+    - PR (Lukas)
+  - Dataset
+    - Amazon Fine Food Reviews : https://www.kaggle.com/datasets/snap/amazon-fine-food-reviews
+- Begin distributing work.
+  - Preprocess (Together)
+  - Load dataset and verify (Together)
+  - Constructing a training method early stopping, saving best and store model (Together)
+- Group work, time slots?
+  - 02/24 Friday 8.15. Discord.
+- Book the next meeting.
+  - Book next weekly sprint meeting (Tobbe)
+- Other
+- Send email asking about project scope to Karl (Tobbe)
+  - Ask at weekly class meeting for the project if there is no answer before.
+- Python type hinting (Anders)
+- Push parser (Jeremy)
+- Look up at least 1 NLP project (Lukas, Tobbe, Anders, Jeremy), look for methods.
+
