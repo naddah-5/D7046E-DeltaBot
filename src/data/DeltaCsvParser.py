@@ -18,19 +18,24 @@ class DeltaCsvParser:
             for row in reader:
                 
                 # for examples
-                if(i > 30) :
+                if(i > 10) :
                     break
                 i = i+1
                 
-
                 data_row = {"Text": row["Text"], "HelpfulnessNumerator": row["HelpfulnessNumerator"], "HelpfulnessDenominator": row["HelpfulnessDenominator"]}
 
                 data_row["Text"] = self.preProcesing(data_row["Text"])
-                helpfullnessscrore = int(data_row['HelpfulnessNumerator']) - int(data_row['HelpfulnessDenominator'])
+
+                helpfullnessscrore =  self.scoreCalculator(int(data_row['HelpfulnessNumerator']),int(data_row['HelpfulnessDenominator'])) 
                 
                 self.data.append((data_row['Text'],helpfullnessscrore))
-            print(self.data)
-
+        
+    def scoreCalculator(self,num,den):
+        if num==den:
+            return num
+        else:
+            return 2*num-den
+        
 
     def preProcesing(self, review):
         # Cleaning special character from the review
