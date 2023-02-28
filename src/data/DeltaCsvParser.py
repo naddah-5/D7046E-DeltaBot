@@ -1,6 +1,7 @@
 import csv
 import nltk
 import re
+from nltk.stem import PorterStemmer
 from nltk.corpus import stopwords
 
 
@@ -12,6 +13,7 @@ nltk.download('wordnet')
 class DeltaCsvParser:
     def __init__(self, csv_path):
         self.data = []
+        self.stemmer = PorterStemmer()
         with open(csv_path, 'r', encoding='utf-8') as f:
             reader = csv.DictReader(f)
             i = 0
@@ -50,7 +52,9 @@ class DeltaCsvParser:
         # Removing the stop words
         filtered_words = [word for word in words if word not in set(stopwords.words('english'))]
 
-        return filtered_words
+        stemmered_word = [self.stemmer.stem(word) for word in filtered_words]
+        
+        return stemmered_word
 
     def save(self, output_path):
         with open(output_path, 'w', newline='', encoding='utf-8') as f:
