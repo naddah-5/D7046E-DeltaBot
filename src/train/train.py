@@ -2,6 +2,7 @@ import torch
 import torch.nn as nn
 import torch.optim as optim
 import numpy
+import copy
 
 class Train():
     """
@@ -21,12 +22,12 @@ class Train():
         self.batches = batch_size
         self.epochs = epochs
         self.loss_function = loss_function
+        self.best_network = None
+        self.best_accuracy = 0
     
     def train(self, dataset, network: nn.Sequential, learning_rate: int):
         optimizer: torch.optim.Adam = torch.optim.Adam(network.parameters(), learning_rate)
         
-        best_network = None
-        best_accuracy = 0
 
         training_data = dataset.testData()
         validation_data = dataset.validationData()
@@ -47,8 +48,18 @@ class Train():
             with torch.no_grad():
                 correct_prediction = 0
                 total_predictions = 0
+
                 for _, (data, labels) in enumerate(validation_data):
                     predictions = network(data)
                     predicted = list(prediction.argmax() for prediction in predictions)
                     correct_prediction += numpy.equal(predicted, labels).sum().item()
                     total_predictions += len(predicted)
+
+                    accuracy = correct_prediction/total_predictions
+                    print(f'\rThe accuracy of the model is {str(correct_prediction/total_predictions)[:4]}%.')
+                print()
+
+                if accuracy > self.best_accuracy:
+                    print("Storing model")
+                    self.best_network = copy.deepcopy(network.state_dict())
+                    self.best_accuracy = accuracy
