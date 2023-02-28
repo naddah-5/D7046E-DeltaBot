@@ -34,7 +34,7 @@ class DeltaCsvParser:
         if num==den:
             return num
         else:
-            return 2*num-den
+            return 2*num-den 
         
 
     def preProcesing(self, review):
@@ -50,10 +50,7 @@ class DeltaCsvParser:
         # Removing the stop words
         filtered_words = [word for word in words if word not in set(stopwords.words('english'))]
 
-        # Lemmatizing the words
-        lemmatized_words = [self.stemmer.stem(word) for word in filtered_words]
-
-        return lemmatized_words
+        return filtered_words
 
     def save(self, output_path):
         with open(output_path, 'w', newline='', encoding='utf-8') as f:
