@@ -106,4 +106,3 @@ dependencies:
     - pytz==2022.7.1
     - torchaudio==0.13.1
     - torchvision==0.14.1
-prefix: C:\Users\Ander\.conda\envs\nnlm_delta
