@@ -1,0 +1,40 @@
+import numpy
+import torch
+from gensim.models import KeyedVectors
+
+# Load embeddings from the pre-trained file
+import gensim.downloader as api
+
+
+class DeltaEmbedder:
+    def __init__(self):
+        self.wv = api.load('word2vec-google-news-300')
+    
+    def __call__(self, embedding_length):
+        
+        max_word_in_sentence = 50
+        tensor = tensor.long()
+
+        # Initate your embedding
+        embedding = torch.zeros(embedding_length)
+
+        # How do we get words from our tensor?
+        words = [self.wv.index_to_key[i] for i in tensor]
+
+        # How do we get tokens from our words?
+        tokens = [self.wv.key_to_index[word] for word in words]
+        
+        # What do we loop over?
+        for i in range(max_word_in_sentence):
+            # How do we handle OOV?
+            if i >= len(tokens): 
+                embedding = embedding + torch.Tensor(numpy.zeros(embedding_length))
+            else:
+                if tokens[i] in self.wv:
+                    # How do we embed our token?
+                    embedding = embedding +  torch.Tensor(self.wv[tokens[i]])
+                else:
+                    # How do we store it?
+                    embedding = embedding +  torch.Tensor(numpy.zeros(embedding_length))
+                    
+        return embedding
