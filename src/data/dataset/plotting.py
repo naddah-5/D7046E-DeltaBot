@@ -12,7 +12,7 @@ def plotRatingsCount() -> None:
     ax.bar(xaxis, ratings)
     plt.show()
 
-#plotRatingsCount()
+plotRatingsCount()
 
 
 

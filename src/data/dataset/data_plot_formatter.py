@@ -13,10 +13,12 @@ def read_file(file_name: str) -> None:
             ratingScore = float(line[6])
 
             # Handle division by zero, purely for graphing.
+            print(helpfulnessNumerator, helpfulnessDenominator)
             if helpfulnessDenominator == 0:
-                helpfulnessRating = helpfulnessNumerator
+                helpfulnessRating = float(helpfulnessNumerator)
             else:
-                helpfulnessRating = helpfulnessNumerator/helpfulnessDenominator
+                helpfulnessRating = float(helpfulnessNumerator/helpfulnessDenominator)
+                print(helpfulnessRating)
 
             newLine = [helpfulnessRating, ratingScore]
             fileContent.append(newLine)
