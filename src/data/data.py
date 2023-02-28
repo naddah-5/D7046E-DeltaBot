@@ -38,13 +38,15 @@ class DeltaData():
     def getTestingSet(self):
         return self.test
 
+"""
+# How to use a DeltaData object (example)
 if __name__ == "__main__":
 
     embedding_size = 300
-    embedder = De
+    embedder = DeltaEmbedder()
 
     #to create the data on a new csv file
-    data = DeltaData(csv_source_path='src/data/dataset/Reviews.csv',)
+    data = DeltaData(embedder=embedder,embedding_size=embedding_size,csv_source_path='src/data/dataset/Reviews.csv',)
 
     #to load the data from already processed data file
     #data = DeltaData(csv_proceed_path='src/data/dataset/Processed_Data.csv')
@@ -53,6 +55,8 @@ if __name__ == "__main__":
     train_data = data.getTrainingSet()
     train_loader = DataLoader(train_data, batch_size=1, shuffle=True)
 
-    for batch_nr, (labels, data) in enumerate(train_loader):
+    for batch_nr, (data, labels) in enumerate(train_loader):
         if(batch_nr < 1):
             print(labels,data)
+
+"""
