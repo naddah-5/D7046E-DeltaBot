@@ -130,3 +130,6 @@ dmypy.json
 
 # Exclude the dataset
 *.csv
+
+# Exclude the models
+*.pt

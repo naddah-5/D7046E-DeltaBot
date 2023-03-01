@@ -2,7 +2,7 @@ import torch
 import torch.nn as nn
 import copy
 
-def NeuralModel():
+class NeuralModel():
     def __init__(self, embedding_length:int = 300):
         self.network = nn.Sequential(
             nn.Linear(embedding_length, 100),
