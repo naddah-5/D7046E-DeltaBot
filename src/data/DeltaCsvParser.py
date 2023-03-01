@@ -34,17 +34,20 @@ class DeltaCsvParser:
 
         
     def scoreCalculator(self,num : int,den :int )-> int:
+        if den == 0:
+            return 0
+        
         ratio = num/den
         if ratio <= 0.3:
-            return 0
-        elif 0.3 < ratio <= 0.4:
             return 1
-        elif 0.4 < ratio <= 0.6:
+        elif 0.3 < ratio <= 0.4:
             return 2
-        elif 0.6 < ratio <= 0.7:
+        elif 0.4 < ratio <= 0.6:
             return 3
-        else:
+        elif 0.6 < ratio <= 0.7:
             return 4
+        else:
+            return 5
         
 
     def preProcesing(self, review : str)->list:
