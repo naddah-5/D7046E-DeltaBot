@@ -18,12 +18,6 @@ class DeltaCsvParser:
             reader = csv.DictReader(f)
             i = 0
             for row in reader:
-                
-                # for examples
-                if(i > 10) :
-                    break
-                i = i+1
-
                 if row["HelpfulnessNumerator"] <= row["HelpfulnessDenominator"]:
                     data_row = {"Text": row["Text"], "HelpfulnessNumerator": row["HelpfulnessNumerator"], "HelpfulnessDenominator": row["HelpfulnessDenominator"]}
 
