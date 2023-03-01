@@ -16,10 +16,11 @@ class DeltaCsvParser:
         self.stemmer = PorterStemmer()
         with open(csv_path, 'r', encoding='utf-8') as f:
             reader = csv.DictReader(f)
-            i = 0
             for row in reader:
-                if row["HelpfulnessNumerator"] <= row["HelpfulnessDenominator"]:
-                    data_row = {"Text": row["Text"], "HelpfulnessNumerator": row["HelpfulnessNumerator"], "HelpfulnessDenominator": row["HelpfulnessDenominator"]}
+                data_row = {"Text": row["Text"], "HelpfulnessNumerator": row["HelpfulnessNumerator"], "HelpfulnessDenominator": row["HelpfulnessDenominator"]}
+
+                if (int(data_row["HelpfulnessNumerator"]) <= int(data_row["HelpfulnessDenominator"])):
+                    
 
                     data_row["Text"] = self.preProcesing(data_row["Text"])
 
