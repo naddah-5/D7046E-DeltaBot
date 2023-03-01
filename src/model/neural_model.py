@@ -1,6 +1,6 @@
 import torch
 import torch.nn as nn
-import copy
+
 
 class NeuralModel():
     def __init__(self, embedding_length:int = 300):
@@ -12,4 +12,7 @@ class NeuralModel():
         )
     
     def save_network(self, model_name: str):
-        torch.save(self.network, model_name)
+        torch.save(self.network.state_dict(), model_name)
+
+    def load_network(self, model_name: str):
+        self.network.load_state_dict(torch.load(model_name))
