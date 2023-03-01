@@ -3,6 +3,45 @@ A ANN based chatbot project for the course D7046E.
 
 ---------------------------------------------------------
 
+28-2-2023 Meeting Agenda
+
+Participants: Lukas, Tobbe, Anders, Jeremy
+
+- Status report
+  - Preprocess
+    - In progress, the base structure is there.
+  - Load dataset and verify
+    - Loading is working
+    - Need to implements sampling -> (distinguish good and bad reviews)
+ - Constructing a training method early stopping, saving best and store model
+  - Not here yet
+- Question about project scope
+  - User inputs text, chatbot responds with suggestions based on
+    - too simple
+    - swear words
+    - incoherent
+    - repetitive
+- Python type hinting
+- Push parser
+  - done
+- Look up at least 1 NLP project
+  - done
+- Define clearly what the chatbot should do
+  - Input text -> Analyze text -> Hard coded input
+- Book next working session (if we want one)
+
+- Book next weekly sprint meeting
+  - Done
+- Other
+  - Crunch?
+    - Tuesday 28-2, 13:00 -> 17:00
+    - Wednesday 1-3, 13:00 -> 17:00
+    - Friday 3-3, 8:00 -> 11:30, 13:00 -> 17:00 (DISCORD - ROOM BOOKED)
+    - Monday 6-3, 9:00 -> 11:30 (discord)
+    - Tuesday 7-3, 13:00 -> 17:00 (ROOM BOOKED)
+    
+-------------------------------------------------------------------------
+
 21-2-2023 Meeting Agenda
 
 Participants: Lukas, Tobbe, Anders, Jeremy
