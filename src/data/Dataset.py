@@ -9,7 +9,7 @@ class DeltaDataset(torch.utils.data.Dataset):
         self.embedding_size = embedding_size
     def __len__(self):
         return len(self.df)
-    def __getitem__(self, index):
+    def __getitem__(self, index : int ):
         helpfullness = self.df.iloc[index]['HelpfulnessScore']
         text = self.df.iloc[index]['Text']
         return self.embedder(text, self.embedding_size), helpfullness 

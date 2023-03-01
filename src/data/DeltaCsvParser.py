@@ -11,7 +11,7 @@ nltk.download('wordnet')
 
 
 class DeltaCsvParser:
-    def __init__(self, csv_path):
+    def __init__(self, csv_path : str):
         self.data = []
         self.stemmer = PorterStemmer()
         with open(csv_path, 'r', encoding='utf-8') as f:
@@ -32,14 +32,14 @@ class DeltaCsvParser:
                 
                 self.data.append((data_row['Text'],helpfullnessscrore))
         
-    def scoreCalculator(self,num,den):
-        if num==den:
-            return num
+    def scoreCalculator(self,num : int,den :int )-> int:
+        if den==0:
+            return -1
         else:
             return 2*num-den 
         
 
-    def preProcesing(self, review):
+    def preProcesing(self, review : str)->list:
         # Cleaning special character from the review
         review = re.sub(pattern='[^a-zA-Z]', repl=' ', string=review)
 
@@ -56,7 +56,7 @@ class DeltaCsvParser:
         
         return stemmered_word
 
-    def save(self, output_path):
+    def save(self, output_path : str) -> None:
         with open(output_path, 'w', newline='', encoding='utf-8') as f:
             writer = csv.DictWriter(f, fieldnames=["Text", "HelpfulnessScore"])
             writer.writeheader()
