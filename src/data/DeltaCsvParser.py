@@ -31,12 +31,20 @@ class DeltaCsvParser:
                 helpfullnessscrore =  self.scoreCalculator(int(data_row['HelpfulnessNumerator']),int(data_row['HelpfulnessDenominator'])) 
                 
                 self.data.append((data_row['Text'],helpfullnessscrore))
+
         
     def scoreCalculator(self,num : int,den :int )-> int:
-        if den==0:
-            return -1
+        ratio = num/den
+        if ratio <= 0.3:
+            return 0
+        elif 0.3 < ratio <= 0.4:
+            return 1
+        elif 0.4 < ratio <= 0.6:
+            return 2
+        elif 0.6 < ratio <= 0.7:
+            return 3
         else:
-            return 2*num-den 
+            return 4
         
 
     def preProcesing(self, review : str)->list:
@@ -62,4 +70,3 @@ class DeltaCsvParser:
             writer.writeheader()
             for text,helpfullness in self.data:
                 writer.writerow({'Text':text,'HelpfulnessScore':helpfullness})
-            
