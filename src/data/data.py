@@ -1,7 +1,7 @@
 import torch
-from DeltaCsvParser import DeltaCsvParser
-from Dataset import DeltaDataset
-from DeltaEmbedder import DeltaEmbedder
+from delta_csv_carser import DeltaCsvParser
+from delta_dataset import DeltaDataset
+from delta_embedder import DeltaEmbedder
 from torch.utils.data import DataLoader
 
 class DeltaData():
@@ -29,13 +29,13 @@ class DeltaData():
         self.test_size = len(self.dataset) -  self.train_size - self.val_size
         self.train,self.val,self.test = torch.utils.data.random_split(self.dataset, [self.train_size, self.val_size,self.test_size])
 
-    def getTrainingLoader(self,batch_size : int = 10 ,shuffle : bool = True) -> DataLoader:
+    def get_training_loader(self,batch_size : int = 10 ,shuffle : bool = True) -> DataLoader:
         return torch.utils.data.DataLoader(self.train, batch_size=batch_size, shuffle=shuffle)
 
-    def getValidationLoader(self,batch_size : int = 10 ,shuffle : bool = True)-> DataLoader:
+    def get_validation_loader(self,batch_size : int = 10 ,shuffle : bool = True)-> DataLoader:
         return torch.utils.data.DataLoader(self.val, batch_size=batch_size, shuffle=shuffle)
 
-    def getTestingLoader(self,batch_size : int = 10 ,shuffle : bool = True)-> DataLoader:
+    def get_testing_loader(self,batch_size : int = 10 ,shuffle : bool = True)-> DataLoader:
         return torch.utils.data.DataLoader(self.test, batch_size=batch_size, shuffle=shuffle)
 
 """

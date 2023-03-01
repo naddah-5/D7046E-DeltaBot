@@ -29,7 +29,7 @@ class DeltaCsvParser:
                     self.data.append((data_row['Text'],helpfullnessscrore))
 
         
-    def scoreCalculator(self,num : int,den :int )-> int:
+    def score_calculator(self,num : int,den :int )-> int:
         if den == 0:
             return 0
 
@@ -46,9 +46,12 @@ class DeltaCsvParser:
             return 5
         
 
-    def preProcesing(self, review : str)->list:
+    def pre_procesing(self, review : str)->list:
+
+        formattedString = re.sub('<.*?>', 'link', review)
+
         # Cleaning special character from the review
-        review = re.sub(pattern='[^a-zA-Z]', repl=' ', string=review)
+        review = re.sub(pattern='[^a-zA-Z]', repl=' ', string=formattedString)
 
         # Converting the entire review into lower case
         review = review.lower()

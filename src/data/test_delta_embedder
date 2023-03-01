@@ -1,5 +1,5 @@
 import unittest 
-from DeltaEmbedder import DeltaEmbedder
+from delta_embedder import DeltaEmbedder
 import torch
 
 class TestDeltaEmbedder(unittest.TestCase):
