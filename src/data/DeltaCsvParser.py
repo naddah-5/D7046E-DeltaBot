@@ -23,28 +23,32 @@ class DeltaCsvParser:
                 if(i > 10) :
                     break
                 i = i+1
-                
-                data_row = {"Text": row["Text"], "HelpfulnessNumerator": row["HelpfulnessNumerator"], "HelpfulnessDenominator": row["HelpfulnessDenominator"]}
 
-                data_row["Text"] = self.preProcesing(data_row["Text"])
+                if row["HelpfulnessNumerator"] <= row["HelpfulnessDenominator"]:
+                    data_row = {"Text": row["Text"], "HelpfulnessNumerator": row["HelpfulnessNumerator"], "HelpfulnessDenominator": row["HelpfulnessDenominator"]}
 
-                helpfullnessscrore =  self.scoreCalculator(int(data_row['HelpfulnessNumerator']),int(data_row['HelpfulnessDenominator'])) 
-                
-                self.data.append((data_row['Text'],helpfullnessscrore))
+                    data_row["Text"] = self.preProcesing(data_row["Text"])
+
+                    helpfullnessscrore =  self.scoreCalculator(int(data_row['HelpfulnessNumerator']),int(data_row['HelpfulnessDenominator']))
+
+                    self.data.append((data_row['Text'],helpfullnessscrore))
 
         
     def scoreCalculator(self,num : int,den :int )-> int:
+        if den == 0:
+            return 0
+
         ratio = num/den
         if ratio <= 0.3:
-            return 0
-        elif 0.3 < ratio <= 0.4:
             return 1
-        elif 0.4 < ratio <= 0.6:
+        elif 0.3 < ratio <= 0.4:
             return 2
-        elif 0.6 < ratio <= 0.7:
+        elif 0.4 < ratio <= 0.6:
             return 3
-        else:
+        elif 0.6 < ratio <= 0.7:
             return 4
+        else:
+            return 5
         
 
     def preProcesing(self, review : str)->list:
