@@ -1,8 +1,11 @@
+
 import torch
 import torch.nn as nn
 import torch.optim as optim
 import numpy
 import copy
+from src.data.data import DeltaData
+
 
 class Train():
     """
@@ -26,12 +29,11 @@ class Train():
         self.best_accuracy = 0
     
 
-    def runTraining(self, dataset, network: nn.Sequential, learning_rate: int):
+    def runTraining(self, dataset : DeltaData, network: nn.Sequential, learning_rate: int):
         optimizer: torch.optim.Adam = torch.optim.Adam(network.parameters(), learning_rate)
         
-
-        training_data = dataset.testData()
-        validation_data = dataset.validationData()
+        training_data = dataset.get_training_loader(batch_size=self.batch_size,shuffle = True)
+        validation_data = dataset.get_validation_loader(batch_size=self.batch_size,shuffle = False)
 
         for epoch in range(self.epochs):
             for batch_nr, (data, labels) in enumerate(training_data):
@@ -64,3 +66,4 @@ class Train():
                     print("Storing model")
                     self.best_network = copy.deepcopy(network.state_dict())
                     self.best_accuracy = accuracy
+
