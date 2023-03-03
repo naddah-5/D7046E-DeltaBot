@@ -25,7 +25,8 @@ class Train():
             batch_size: int = 10, 
             epochs: int = 1) -> None:
         
-        self.dev = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
+        #self.dev = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
+        self.dev = torch.device('cpu')
 
         self.batch_size = batch_size
         self.epochs = epochs
@@ -40,9 +41,10 @@ class Train():
         """
 
         network = network.to(self.dev)
+        self.best_network = copy.deepcopy(network.state_dict())
         
 
-        optimizer: torch.optim.SGD = torch.optim.SGD(network.parameters(), learning_rate)
+        optimizer: torch.optim.Adam = torch.optim.Adam(network.parameters(), learning_rate)
         
         training_data = dataset.get_training_loader(batch_size=self.batch_size,shuffle = True)
         validation_data = dataset.get_validation_loader(batch_size=self.batch_size,shuffle = False)
@@ -64,24 +66,26 @@ class Train():
             for batch_nr, (data, labels) in enumerate(training_data):
                 data = data.to(self.dev)
                 labels = labels.to(self.dev)
+
                 predictions = network(data)
+
                 loss = self.loss_function(predictions, labels)
                 loss.backward()
                 optimizer.step()
                 optimizer.zero_grad()
 
                 predicted = list(prediction.argmax() for prediction in predictions)
-                predicted = torch.as_tensor(predicted, dtype=torch.float32).to(self.dev)
-                correct_prediction += torch.eq(predicted, labels).sum().item()
+                prediction = torch.as_tensor(predicted, dtype=torch.float32).to(self.dev)
+                correct_prediction += torch.eq(prediction, labels).sum().item()
                 #correct_prediction += numpy.equal(predicted, labels).sum().item()
-                total_predictions += len(predicted)
-                accuracy = correct_prediction/total_predictions*100
+                total_predictions += len(prediction)
+                accuracy = correct_prediction/total_predictions
 
                 batch_training_accuracies.append(accuracy)
                 batch_training_losses.append(loss.item())
 
                 print(
-                    f'\rEpoch {epoch+1} [{batch_nr+1}/{len(training_data)}] - Loss {loss}',
+                    f'\rEpoch {epoch+1} [{batch_nr+1}/{len(training_data)}] - Loss {str(loss.item())[:6]}',
                     end=''
                     )
             print()
@@ -90,33 +94,38 @@ class Train():
                 total_predictions: int = 0
 
                 for _, (data, labels) in enumerate(validation_data):
+                    data = data.to(self.dev)
+                    labels = labels.to(self.dev)
+                    
                     predictions = network(data)
-                    predicted = list(prediction.argmax() for prediction in predictions)
-                    predicted = torch.as_tensor(predicted, dtype=torch.float32).to(self.dev)
-                    correct_prediction += torch.eq(predicted, labels).sum().item()
-                    #correct_prediction += numpy.equal(predicted, labels).sum().item()
-                    total_predictions += len(predicted)
 
-                    accuracy = correct_prediction/total_predictions*100
+                    predicted = list(prediction.argmax() for prediction in predictions)
+                    prediction = torch.as_tensor(predicted, dtype=torch.float32).to(self.dev)
+                    correct_prediction += torch.eq(prediction, labels).sum().item()
+                    #correct_prediction += numpy.equal(predicted, labels).sum().item()
+                    total_predictions += len(prediction)
+                    accuracy = correct_prediction/total_predictions
                     loss = self.loss_function(predictions, labels)
 
                     batch_validation_accuracies.append(accuracy)
                     batch_validation_losses.append(loss.item())
 
 
-                    print(f'\rThe accuracy of the model is {str(correct_prediction/total_predictions)[:4]}%.')
+                    print(f'\rThe accuracy of the model is {str(correct_prediction/total_predictions)[:4]}.', end='')
                 print()
 
                 if accuracy > self.best_accuracy:
                     print("Storing model")
                     self.best_network = copy.deepcopy(network.state_dict())
                     self.best_accuracy = accuracy
+
             
             validation_accuracies.append(sum(batch_validation_accuracies)/len(batch_validation_accuracies))
             training_accuracies.append(sum(batch_training_accuracies)/len(batch_training_accuracies))
 
             validation_losses.append(sum(batch_validation_losses)/len(batch_validation_losses))
             training_losses.append(sum(batch_training_losses)/len(batch_training_losses))
+        network.load_state_dict(self.best_network)
         
         with open('src/data/Accuracy_and_loss.csv', 'w') as f:
       
@@ -129,6 +138,8 @@ class Train():
 
             csv_writer.writerows(result)
 
+        return network    
+    
 
     def test_training(self, dataset: DeltaData, network: nn.Sequential):
         """

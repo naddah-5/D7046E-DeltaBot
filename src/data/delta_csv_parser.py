@@ -4,7 +4,7 @@ import re
 from nltk.stem import PorterStemmer
 from nltk.corpus import stopwords
 
-#nltk.download('stopwords')
+nltk.download('stopwords')
 
 
 class DeltaCsvParser:
