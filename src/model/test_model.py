@@ -1,11 +1,22 @@
-import torch
-import torch.nn
-import torch.testing
+"""
+Testing module.
+"""
+
 import unittest
+import torch
+import torch.nn as nn
+import torch.testing
 from neural_model import NeuralModel
 
 class TestModel(unittest.TestCase):
+    """
+    Unit testing for the NeuralModel class.
+    """
+
     def test_save_and_load_network(self):
+        """
+        Verify that saving and loading networks work as intended.
+        """
         test_model = NeuralModel()
         loaded_model = NeuralModel()
 
@@ -17,6 +28,19 @@ class TestModel(unittest.TestCase):
 
         for key in test_net:
             torch.testing.assert_allclose(test_net[key], loaded_net[key])
+
+    def test_define_network(self):
+        """
+        Verify that we can manuallly define our networks.
+        """
+        test_model = NeuralModel()
+        new_model = nn.Sequential(
+            nn.Linear(3, 1),
+            nn.Sigmoid(),
+            nn.Softmax()
+        )
+        test_model.define_network(new_network=new_model)
+        self.assertEqual(new_model, test_model.network)
 
 if __name__ == '__main__':
     unittest.main()
