@@ -1,10 +1,12 @@
+"""
+Training module.
+"""
 
+import copy
+import numpy
 import torch
 import torch.nn as nn
-import torch.optim as optim
-import numpy
-import copy
-from src.data.data import DeltaData
+from src.data.delta_dataset import DeltaDataset
 
 
 class Train():
@@ -29,7 +31,10 @@ class Train():
         self.best_accuracy = 0
     
 
-    def runTraining(self, dataset : DeltaData, network: nn.Sequential, learning_rate: int):
+    def run_training(self, dataset: DeltaDataset, network: nn.Sequential, learning_rate: float = 0.01):
+        """
+        Method for training the specified model.
+        """
         optimizer: torch.optim.Adam = torch.optim.Adam(network.parameters(), learning_rate)
         
         training_data = dataset.get_training_loader(batch_size=self.batch_size,shuffle = True)
