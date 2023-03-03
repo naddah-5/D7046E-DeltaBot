@@ -124,5 +124,5 @@ class Train():
                     total_predictions += len(predicted)
 
                     accuracy = correct_prediction/total_predictions
-                    print(f'\rThe accuracy of the model is {str(accuracy)[:4]}%.')
+                    print(f'\rThe accuracy of the model is {str(accuracy)[:4]}%.',end="")
                 print()
