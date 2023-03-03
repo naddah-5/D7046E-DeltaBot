@@ -2,10 +2,10 @@
 Testing module.
 """
 
+import unittest
 import torch
 import torch.nn as nn
 import torch.testing
-import unittest
 from neural_model import NeuralModel
 
 class TestModel(unittest.TestCase):
