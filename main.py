@@ -13,7 +13,7 @@ def main():
     DATASET_PATH='src/data/dataset/Reviews.csv'
     neural_model = NeuralModel()
     trainer = Train()
-    data = DeltaData(embedder=DeltaEmbedder(), embedding_size=300,csv_source_path=DATASET_PATH)
+    data = DeltaData(embedder=DeltaEmbedder(), embedding_size=300,csv_source_path="D7046E-DeltaBot/src/data/dataset/Reviews.csv")
 
     trainer.run_training(dataset=data, network=neural_model.network)
 

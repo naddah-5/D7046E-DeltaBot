@@ -4,10 +4,7 @@ import re
 from nltk.stem import PorterStemmer
 from nltk.corpus import stopwords
 
-
-nltk.download('punkt')
 nltk.download('stopwords')
-nltk.download('wordnet')
 
 
 class DeltaCsvParser:
@@ -16,15 +13,17 @@ class DeltaCsvParser:
         self.stemmer = PorterStemmer()
         with open(csv_path, 'r', encoding='utf-8') as f:
             reader = csv.DictReader(f)
+            i=0
             for row in reader:
                 data_row = {"Text": row["Text"], "HelpfulnessNumerator": row["HelpfulnessNumerator"], "HelpfulnessDenominator": row["HelpfulnessDenominator"]}
-
+                i+=1
                 if (int(data_row["HelpfulnessNumerator"]) <= int(data_row["HelpfulnessDenominator"])):
                     
+                    print('\rRow : ',i,end="")
 
-                    data_row["Text"] = self.preProcesing(data_row["Text"])
+                    data_row["Text"] = self.pre_procesing(data_row["Text"])
 
-                    helpfullnessscrore =  self.scoreCalculator(int(data_row['HelpfulnessNumerator']),int(data_row['HelpfulnessDenominator']))
+                    helpfullnessscrore =  self.score_calculator(int(data_row['HelpfulnessNumerator']),int(data_row['HelpfulnessDenominator']))
 
                     self.data.append((data_row['Text'],helpfullnessscrore))
 

@@ -1,5 +1,5 @@
 import unittest 
-from delta_csv_carser import DeltaCsvParser
+from delta_csv_parser import DeltaCsvParser
 
 class TestDeltaCsvParser(unittest.TestCase):
 
