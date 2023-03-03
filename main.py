@@ -12,8 +12,8 @@ def main():
     """
     DATASET_PATH='src/data/dataset/Reviews.csv'
     neural_model = NeuralModel()
-    trainer = Train()
-    data = DeltaData(embedder=DeltaEmbedder(), embedding_size=300,csv_proceed_path="src/data/dataset/Processed_Data.csv")
+    trainer = Train(epochs=10)
+    data = DeltaData(embedder=DeltaEmbedder(), embedding_size=300,csv_proceed_path="src/data/dataset/little_dataset.csv")
 
     trainer.run_training(dataset=data, network=neural_model.network)
 

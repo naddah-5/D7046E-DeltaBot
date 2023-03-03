@@ -43,10 +43,14 @@ class Train():
 
         validation_accuracies = []
         training_accuracies = []
+        validation_losses = []
+        training_losses = []
         for epoch in range(self.epochs):
 
             batch_training_accuracies = []
             batch_validation_accuracies = []
+            batch_training_losses = []
+            batch_validation_losses = []
 
             correct_prediction : int = 0
             total_predictions :int = 0
@@ -64,6 +68,8 @@ class Train():
                 accuracy = correct_prediction/total_predictions*100
 
                 batch_training_accuracies.append(accuracy)
+                batch_training_losses.append(loss.item())
+
                 print(
                     f'\rEpoch {epoch+1} [{batch_nr+1}/{len(training_data)}] - Loss {loss}',
                     end=''
@@ -80,8 +86,11 @@ class Train():
                     total_predictions += len(predicted)
 
                     accuracy = correct_prediction/total_predictions*100
+                    loss = self.loss_function(predictions, labels)
 
                     batch_validation_accuracies.append(accuracy)
+                    batch_validation_losses.append(loss.item())
+
 
                     print(f'\rThe accuracy of the model is {str(correct_prediction/total_predictions)[:4]}%.')
                 print()
@@ -93,15 +102,18 @@ class Train():
             
             validation_accuracies.append(sum(batch_validation_accuracies)/len(batch_validation_accuracies))
             training_accuracies.append(sum(batch_training_accuracies)/len(batch_training_accuracies))
+
+            validation_losses.append(sum(batch_validation_losses)/len(batch_validation_losses))
+            training_losses.append(sum(batch_training_losses)/len(batch_training_losses))
         
-        with open('src/data/Accuracy.csv', 'w') as f:
+        with open('src/data/Accuracy_and_loss.csv', 'w') as f:
       
             csv_writer = csv.writer(f)
-            csv_writer.writerow(['validation_accuracy','training_accuracy'])
+            csv_writer.writerow(['validation_accuracy','training_accuracy','validation_loss','training_loss'])
 
             result = []
             for i in range(len(validation_accuracies)):
-                result.append([validation_accuracies[i],training_accuracies[i]])
+                result.append([validation_accuracies[i],training_accuracies[i],validation_losses[i],training_losses[i]])
 
             csv_writer.writerows(result)
 

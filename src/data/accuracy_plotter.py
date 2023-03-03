@@ -2,7 +2,7 @@ import csv
 import matplotlib.pyplot as plt
 
 
-with open('src/data/Accuracy.csv', 'r') as csvfile:
+with open('src/data/Accuracy_and_loss.csv', 'r') as csvfile:
 
     data = csv.DictReader(csvfile)
 
