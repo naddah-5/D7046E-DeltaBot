@@ -1,9 +1,11 @@
+"""
+Training module.
+"""
 
+import copy
+import numpy
 import torch
 import torch.nn as nn
-import torch.optim as optim
-import numpy
-import copy
 from src.data.data import DeltaData
 
 
@@ -29,7 +31,10 @@ class Train():
         self.best_accuracy = 0
     
 
-    def runTraining(self, dataset : DeltaData, network: nn.Sequential, learning_rate: int):
+    def run_training(self, dataset: DeltaData, network: nn.Sequential, learning_rate: float = 0.01):
+        """
+        Method for training the specified model.
+        """
         optimizer: torch.optim.Adam = torch.optim.Adam(network.parameters(), learning_rate)
         
         training_data = dataset.get_training_loader(batch_size=self.batch_size,shuffle = True)
@@ -67,3 +72,23 @@ class Train():
                     self.best_network = copy.deepcopy(network.state_dict())
                     self.best_accuracy = accuracy
 
+    def test_training(self, dataset: DeltaData, network: nn.Sequential):
+        """
+        Method for running the test dataset on our model.
+        """
+
+        testing_data = dataset.get_testing_loader(batch_size=self.batch_size,shuffle = False)
+
+        with torch.no_grad():
+                correct_prediction: int = 0
+                total_predictions: int = 0
+
+                for _, (data, labels) in enumerate(testing_data):
+                    predictions = network(data)
+                    predicted = list(prediction.argmax() for prediction in predictions)
+                    correct_prediction += numpy.equal(predicted, labels).sum().item()
+                    total_predictions += len(predicted)
+
+                    accuracy = correct_prediction/total_predictions
+                    print(f'\rThe accuracy of the model is {str(accuracy)[:4]}%.')
+                print()
