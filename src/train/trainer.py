@@ -6,9 +6,7 @@ import copy
 import numpy
 import torch
 import torch.nn as nn
-import torch.optim as optim
-import numpy
-import copy
+from src.data.data import DeltaData
 
 
 class Train():
@@ -33,7 +31,7 @@ class Train():
         self.best_accuracy = 0
     
 
-    def run_training(self, dataset: DeltaDataset, network: nn.Sequential, learning_rate: float = 0.01):
+    def run_training(self, dataset: DeltaData, network: nn.Sequential, learning_rate: float = 0.01):
         """
         Method for training the specified model.
         """
@@ -74,7 +72,10 @@ class Train():
                     self.best_network = copy.deepcopy(network.state_dict())
                     self.best_accuracy = accuracy
 
-    def test_training(self, dataset, network: nn.Sequential):
+    def test_training(self, dataset: DeltaData, network: nn.Sequential):
+        """
+        Method for running the test dataset on our model.
+        """
 
         testing_data = dataset.get_testing_loader(batch_size=self.batch_size,shuffle = False)
 
