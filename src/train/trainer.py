@@ -68,7 +68,7 @@ class Train():
 
     def test_training(self, dataset, network: nn.Sequential):
 
-        testing_data = dataset.get_testing_loader(batch_size=self.batch_size,shuffle = True)
+        testing_data = dataset.get_testing_loader(batch_size=self.batch_size,shuffle = False)
 
         with torch.no_grad():
                 correct_prediction: int = 0
