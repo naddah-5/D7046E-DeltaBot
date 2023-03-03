@@ -22,7 +22,7 @@ class DeltaData():
 
         
         self.dataset = DeltaDataset(csv_proceed_path,embedder,embedding_size)
-        
+        self.dev = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")        
 
         self.train_size = int(len(self.dataset) * train_proportion)
         self.val_size = int(len(self.dataset) * val_proportion)

@@ -25,9 +25,11 @@ class Train():
             batch_size: int = 10, 
             epochs: int = 1) -> None:
         
+        self.dev = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
+
         self.batch_size = batch_size
         self.epochs = epochs
-        self.loss_function = loss_function
+        self.loss_function = loss_function.to(self.dev)
         self.best_network = None
         self.best_accuracy = 0
     
@@ -36,7 +38,11 @@ class Train():
         """
         Method for training the specified model.
         """
-        optimizer: torch.optim.Adam = torch.optim.Adam(network.parameters(), learning_rate)
+
+        network = network.to(self.dev)
+        
+
+        optimizer: torch.optim.SGD = torch.optim.SGD(network.parameters(), learning_rate)
         
         training_data = dataset.get_training_loader(batch_size=self.batch_size,shuffle = True)
         validation_data = dataset.get_validation_loader(batch_size=self.batch_size,shuffle = False)
@@ -56,6 +62,8 @@ class Train():
             total_predictions :int = 0
 
             for batch_nr, (data, labels) in enumerate(training_data):
+                data = data.to(self.dev)
+                labels = labels.to(self.dev)
                 predictions = network(data)
                 loss = self.loss_function(predictions, labels)
                 loss.backward()
@@ -63,7 +71,9 @@ class Train():
                 optimizer.zero_grad()
 
                 predicted = list(prediction.argmax() for prediction in predictions)
-                correct_prediction += numpy.equal(predicted, labels).sum().item()
+                predicted = torch.as_tensor(predicted, dtype=torch.float32).to(self.dev)
+                correct_prediction += torch.eq(predicted, labels).sum().item()
+                #correct_prediction += numpy.equal(predicted, labels).sum().item()
                 total_predictions += len(predicted)
                 accuracy = correct_prediction/total_predictions*100
 
@@ -82,7 +92,9 @@ class Train():
                 for _, (data, labels) in enumerate(validation_data):
                     predictions = network(data)
                     predicted = list(prediction.argmax() for prediction in predictions)
-                    correct_prediction += numpy.equal(predicted, labels).sum().item()
+                    predicted = torch.as_tensor(predicted, dtype=torch.float32).to(self.dev)
+                    correct_prediction += torch.eq(predicted, labels).sum().item()
+                    #correct_prediction += numpy.equal(predicted, labels).sum().item()
                     total_predictions += len(predicted)
 
                     accuracy = correct_prediction/total_predictions*100
