@@ -9,6 +9,8 @@ import torch.nn as nn
 class NeuralModel():
     """
     Class for defining and handling our neural network.
+    ### NeuralModel:
+    network: nn.Sequential
     """
     def __init__(self, embedding_length:int = 300):
         self.network = nn.Sequential(
