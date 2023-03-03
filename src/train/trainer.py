@@ -6,7 +6,9 @@ import copy
 import numpy
 import torch
 import torch.nn as nn
-from src.data.delta_dataset import DeltaDataset
+import torch.optim as optim
+import numpy
+import copy
 
 
 class Train():
@@ -72,3 +74,20 @@ class Train():
                     self.best_network = copy.deepcopy(network.state_dict())
                     self.best_accuracy = accuracy
 
+    def test_training(self, dataset, network: nn.Sequential):
+
+        testing_data = dataset.get_testing_loader(batch_size=self.batch_size,shuffle = False)
+
+        with torch.no_grad():
+                correct_prediction: int = 0
+                total_predictions: int = 0
+
+                for _, (data, labels) in enumerate(testing_data):
+                    predictions = network(data)
+                    predicted = list(prediction.argmax() for prediction in predictions)
+                    correct_prediction += numpy.equal(predicted, labels).sum().item()
+                    total_predictions += len(predicted)
+
+                    accuracy = correct_prediction/total_predictions
+                    print(f'\rThe accuracy of the model is {str(accuracy)[:4]}%.')
+                print()
