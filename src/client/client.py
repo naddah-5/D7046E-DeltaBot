@@ -1,19 +1,12 @@
 import re
-
-from torch import nn
-import torch
-
-from src.data import delta_csv_parser
 import nltk
+import torch
+from torch import nn
 from nltk.stem import PorterStemmer
 from nltk.corpus import stopwords
-
-# nltk.download('stopwords')
 from src.data.delta_embedder import DeltaEmbedder
 
-
-def switch(predicted):
-    pass
+nltk.download('stopwords')
 
 
 class Client():
@@ -24,7 +17,7 @@ class Client():
 
     def run(self):
         review = input('Enter review: ')
-        processed_review = self.pre_procesing(review)
+        processed_review = self.pre_processing(review)
         delta_embedder = DeltaEmbedder()
         embedded_review = delta_embedder(processed_review, embedding_length=300)
         with torch.no_grad():
@@ -40,7 +33,7 @@ class Client():
                 case 2:
                     print(2)
 
-    def pre_procesing(self, review: str) -> list:
+    def pre_processing(self, review: str) -> list:
         formattedString = re.sub('<.*?>', 'link', review)
 
         # Cleaning special character from the review

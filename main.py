@@ -2,14 +2,12 @@
 Main file, the orchestrator.
 """
 import torch
-from torch import nn
 
 from src.client.client import Client
 from src.model.neural_model import NeuralModel
 from src.train.trainer import Train
 from src.data.data import DeltaData
 from src.data.delta_embedder import DeltaEmbedder
-from src.data.delta_csv_parser import DeltaCsvParser
 
 
 def main():
