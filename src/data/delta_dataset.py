@@ -10,6 +10,6 @@ class DeltaDataset(torch.utils.data.Dataset):
     def __len__(self):
         return len(self.df)
     def __getitem__(self, index : int ):
-        helpfullness = self.df.iloc[index]['HelpfulnessScore']
+        score = self.df.iloc[index]['Score']
         text = self.df.iloc[index]['Text']
-        return self.embedder(text, self.embedding_size), helpfullness 
+        return self.embedder(text, self.embedding_size), score 

@@ -16,7 +16,7 @@ class NeuralModel():
         self.network = nn.Sequential(
             nn.Linear(embedding_length, 100),
             nn.Sigmoid(),
-            nn.Linear(100, 6),
+            nn.Linear(100, 2),
             nn.Softmax()
         )
     
