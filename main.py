@@ -13,10 +13,10 @@ def main():
     """
     DATASET_PATH='src/data/dataset/Reviews.csv'
     neural_model = NeuralModel()
-    trainer = Train(epochs=10, batch_size=10)
+    trainer = Train(epochs=4, batch_size=10)
     data = DeltaData(embedder=DeltaEmbedder(), embedding_size=300,csv_proceed_path="src/data/dataset/Processed_Data_2_medium.csv")
 
-    neural_model.network = trainer.run_training(dataset=data, network=neural_model.network, learning_rate=0.001)
+    neural_model.network = trainer.run_training(dataset=data, network=neural_model.network, learning_rate=0.00001)
     neural_model.save_network('test_network.pt')
 
 def test_gpu() -> None:
