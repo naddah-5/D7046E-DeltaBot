@@ -2,7 +2,31 @@
 A ANN based chatbot project for the course D7046E.
 
 ---------------------------------------------------------
+07-03-2023 Meeting Agenda
 
+Participants: Lukas, Tobbe, Anders, Jeremy
+
+-Status report
+  -Model training 
+    -Stuck with constant accuracy over epochs
+    -Code review on validation accuracy (Tobbe)
+  -Model modifications (Anders)
+    -add layers 
+    -remove stemmer in preprocessing (try changing to wordnet lemmatizer) (Jeremy)
+    -change optimizer 
+    -change embedder 
+    -later -> add regularization (dropout, regularization L1 & L2)
+  -Move to CPU version
+
+-Process user input
+  -connect existing trash model to cli (Lukas)
+  -show the certitude to the user
+About the presentation (09-03-2023)
+  -start tomorrow 
+Book next working session and room if needed
+  -from 8:15 to 12:00 - 13:00 to 17:00 (room booked)
+
+-------------------------------------------------------------------------
 28-2-2023 Meeting Agenda
 
 Participants: Lukas, Tobbe, Anders, Jeremy
