@@ -7,10 +7,10 @@ A ANN based chatbot project for the course D7046E.
 Participants: Lukas, Tobbe, Anders, Jeremy
 
 -Status report
-  -Model training 
-    -Stuck with constant accuracy over epochs
-    -Code review on validation accuracy (Tobbe)
-  -Model modifications (Anders)
+    -Model training 
+      -Stuck with constant accuracy over epochs
+      -Code review on validation accuracy (Tobbe)
+    -Model modifications (Anders)
     -add layers 
     -remove stemmer in preprocessing (try changing to wordnet lemmatizer) (Jeremy)
     -change optimizer 
