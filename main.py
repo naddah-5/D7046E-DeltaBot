@@ -15,7 +15,7 @@ def main():
     trainer = Train(epochs=10, batch_size=10)
     data = DeltaData(embedder=DeltaEmbedder(), embedding_size=300,csv_proceed_path="src/data/dataset/output.csv")
 
-    trainer.run_training(dataset=data, network=neural_model.network, learning_rate=0.01)
+    trainer.run_training(dataset=data, network=neural_model.network, learning_rate=0.001)
 
 
 if __name__=='__main__':
