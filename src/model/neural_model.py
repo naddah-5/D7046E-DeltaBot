@@ -16,11 +16,25 @@ class NeuralModel():
         self.network = nn.Sequential(
             nn.Linear(embedding_length, 1000),
             nn.Sigmoid(),
+            nn.Linear(1000, 1000),
+            nn.Sigmoid(),
+            nn.Linear(1000, 1000),
+            nn.Sigmoid(),
+            nn.Linear(1000, 1000),
+            nn.Sigmoid(),
+            nn.Linear(1000, 1000),
+            nn.Sigmoid(),
+            nn.Linear(1000, 1000),
+            nn.Sigmoid(),
+            nn.Linear(1000, 1000),
+            nn.Sigmoid(),
+            nn.Linear(1000, 1000),
+            nn.Sigmoid(),
             nn.Linear(1000, 500),
-            nn.ReLU(),
+            nn.Sigmoid(),
             nn.Linear(500, 250),
-            nn.ReLU(),
-            nn.Linear(250, 6),
+            nn.Sigmoid(),
+            nn.Linear(250, 3),
             nn.Softmax()
         )
     

@@ -96,7 +96,7 @@ class Train():
                 batch_validation_losses.append(loss.item())
 
 
-                print(f'\rThe accuracy of the model is {str(correct_prediction/total_predictions)[:4]}.')
+                print(f'\rThe accuracy of the model is {correct_prediction/total_predictions}', end='')
             print()
 
             if accuracy > self.best_accuracy:
