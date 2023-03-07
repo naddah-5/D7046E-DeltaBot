@@ -17,9 +17,9 @@ class NeuralModel():
             nn.Linear(embedding_length, 1000),
             nn.Sigmoid(),
             nn.Linear(1000, 500),
-            nn.Sigmoid(),
+            nn.ReLU(),
             nn.Linear(500, 250),
-            nn.Sigmoid(),
+            nn.ReLU(),
             nn.Linear(250, 6),
             nn.Softmax()
         )
