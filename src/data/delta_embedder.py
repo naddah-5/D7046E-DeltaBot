@@ -16,6 +16,7 @@ class DeltaEmbedder:
         embedding = torch.zeros(embedding_length)
         list = list.replace("[","").replace("]","").replace(",","").replace("'","").split()
         # What do we loop over?
+
         for word in list:
             try:
                 embedding += self.wv[word]/len(list)
