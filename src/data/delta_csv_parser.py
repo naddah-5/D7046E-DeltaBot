@@ -1,16 +1,12 @@
 import csv
 import nltk
 import re
-from nltk.stem import PorterStemmer
-from nltk.corpus import stopwords
 
-nltk.download('stopwords')
 
 
 class DeltaCsvParser:
     def __init__(self, csv_path : str):
         self.data = []
-        self.stemmer = PorterStemmer()
         with open(csv_path, 'r', encoding='utf-8') as f:
             reader = csv.DictReader(f)
             i=0

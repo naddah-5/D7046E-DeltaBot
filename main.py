@@ -13,8 +13,8 @@ def main():
     """
     DATASET_PATH='src/data/dataset/Reviews.csv'
     neural_model = NeuralModel()
-    trainer = Train(epochs=100, batch_size=8)
-    data = DeltaData(embedder=DeltaEmbedder(), embedding_size=300,csv_proceed_path="src/data/dataset/new_processed_data.csv")
+    trainer = Train(epochs=2, batch_size=8)
+    data = DeltaData(embedder=DeltaEmbedder(), embedding_size=300,csv_proceed_path="src/data/dataset/medium_sampled_dataset.csv")
 
     neural_model.network = trainer.run_training(dataset=data, network=neural_model.network, learning_rate=0.00001)
     neural_model.save_network('test_network.pt')

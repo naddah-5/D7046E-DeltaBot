@@ -1,6 +1,7 @@
 import torch
 from .delta_csv_parser import DeltaCsvParser
-from .delta_dataset import DeltaDataset
+from .delta_dataset import  DeltaDataset
+from .bow_dataset import BoWEmbedderDataset
 from .delta_embedder import DeltaEmbedder
 from torch.utils.data import DataLoader
 
@@ -21,7 +22,7 @@ class DeltaData():
             self.parser.save(csv_proceed_path)
 
         
-        self.dataset = DeltaDataset(csv_proceed_path,embedder,embedding_size)
+        self.dataset = BoWEmbedderDataset(csv_path=csv_proceed_path)
 
         self.train_size = int(len(self.dataset) * train_proportion)
         self.val_size = int(len(self.dataset) * val_proportion)
