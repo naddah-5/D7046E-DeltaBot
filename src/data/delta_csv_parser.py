@@ -17,9 +17,10 @@ class DeltaCsvParser:
             for row in reader:
                 data_row = {"Text": row["Text"], "HelpfulnessNumerator": row["HelpfulnessNumerator"], "HelpfulnessDenominator": row["HelpfulnessDenominator"]}
                 i+=1
-                if (int(data_row["HelpfulnessNumerator"]) <= int(data_row["HelpfulnessDenominator"])):
+                if (int(data_row["HelpfulnessNumerator"]) <= int(data_row["HelpfulnessDenominator"]) and int(data_row["HelpfulnessDenominator"]) >0):
                     
-                    print('\rRow : ',i,end="")
+                    if(i%1000==0):
+                        print('\rRow : ',i,end="")
 
                     data_row["Text"] = self.pre_procesing(data_row["Text"])
 
@@ -29,20 +30,11 @@ class DeltaCsvParser:
 
         
     def score_calculator(self,num : int,den :int )-> int:
-        if den == 0:
-            return 0
-
         ratio = num/den
-        if ratio <= 0.3:
-            return 1
-        elif 0.3 < ratio <= 0.4:
-            return 2
-        elif 0.4 < ratio <= 0.6:
-            return 3
-        elif 0.6 < ratio <= 0.7:
-            return 4
+        if ratio <= 0.5:
+            return 0
         else:
-            return 5
+            return 1
         
 
     def pre_procesing(self, review : str)->list:
@@ -64,5 +56,30 @@ class DeltaCsvParser:
         with open(output_path, 'w', newline='', encoding='utf-8') as f:
             writer = csv.DictWriter(f, fieldnames=["Text", "HelpfulnessScore"])
             writer.writeheader()
+            self.sample()
             for text,helpfullness in self.data:
                 writer.writerow({'Text':text,'HelpfulnessScore':helpfullness})
+
+    def sample(self):
+        count_0=0
+        count_1=0
+        data = []
+        for text,score in self.data:
+            if score == 0:
+                count_0 +=1
+            else :
+                count_1 +=1
+        mini = min(count_1,count_0)
+        count_0=0
+        count_1=0
+        for text,score in self.data:
+            if (score == 0 and count_0 < mini):
+                data.append((text,score))
+                count_0 +=1
+            elif (score == 1 and count_1 < mini) :
+                data.append((text,score))
+                count_1 +=1
+        self.data = data
+
+#parser = DeltaCsvParser("src/data/dataset/Reviews/csv")
+#parser.save("src/data/dataset/output.csv")

@@ -18,7 +18,7 @@ class DeltaEmbedder:
         # What do we loop over?
         for word in list:
             try:
-                embedding += self.wv[word]/len(list)
+                embedding += self.wv[word]
             except:
                 pass
                     
