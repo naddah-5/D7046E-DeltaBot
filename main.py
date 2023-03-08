@@ -13,12 +13,12 @@ def main():
     """
     DATASET_PATH='src/data/dataset/Reviews.csv'
     
-    trainer = Train(epochs=20, batch_size=8)
+    trainer = Train(epochs=20, batch_size=10)
     x_train, y_train, vocab = read_file_to_tensor_and_vocab("src/data/dataset/sampled_dataset.csv")
     dataset = BoWEmbedderDataset(x_train, y_train)
     neural_model = NeuralModel(embedding_length=len(vocab))
 
-    neural_model.network = trainer.run_training(dataset=dataset, network=neural_model.network, learning_rate=0.00001,batch_size = 10)
+    neural_model.network = trainer.run_training(dataset=dataset, network=neural_model.network, learning_rate=0.001,batch_size = 10)
 
     neural_model.save_network('test_network.pt')
 

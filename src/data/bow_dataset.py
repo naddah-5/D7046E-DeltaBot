@@ -28,12 +28,13 @@ def read_file_to_tensor_and_vocab(file_path):
         reader = csv.DictReader(f)
         for row in reader:
             crow = crow + 1
-            if crow % 100 == 0:
+            if crow % 1000 == 0:
                 print(f'\rRows read: [{crow}]',end="")
-            message = row["Text"]
+            message = row["Text"].replace("[","").replace("]","").replace(",","").replace("'","").split()
             label = row["HelpfulnessScore"]
             data.append((message, int(label)))
             vocab.update(message)
+            
     print()
     vocab = list(dict.fromkeys(vocab))
     vocab = sorted(list(vocab))  # Contains all words from the file as single words and without duplicates
