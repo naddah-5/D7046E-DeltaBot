@@ -22,7 +22,6 @@ class DeltaData():
 
         
         self.dataset = DeltaDataset(csv_proceed_path,embedder,embedding_size)
-        
 
         self.train_size = int(len(self.dataset) * train_proportion)
         self.val_size = int(len(self.dataset) * val_proportion)

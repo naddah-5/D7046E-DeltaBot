@@ -8,6 +8,7 @@ from src.model.neural_model import NeuralModel
 from src.train.trainer import Train
 from src.data.data import DeltaData
 from src.data.delta_embedder import DeltaEmbedder
+import torch
 
 
 def main():

@@ -57,13 +57,8 @@ class DeltaCsvParser:
 
         # Tokenizing the review by words
         words = review.split()
-
-        # Removing the stop words
-        filtered_words = [word for word in words if word not in set(stopwords.words('english'))]
-
-        stemmered_word = [self.stemmer.stem(word) for word in filtered_words]
         
-        return stemmered_word
+        return words
 
     def save(self, output_path : str) -> None:
         with open(output_path, 'w', newline='', encoding='utf-8') as f:
