@@ -16,6 +16,7 @@ def main():
     data = DeltaData(embedder=DeltaEmbedder(), embedding_size=300,csv_proceed_path="src/data/dataset/Processed_Data_test_medium.csv")
 
     trainer.run_training(dataset=data, network=neural_model.network, learning_rate=0.01)
+    neural_model.save_network('network.pt')
 
 
 if __name__=='__main__':
