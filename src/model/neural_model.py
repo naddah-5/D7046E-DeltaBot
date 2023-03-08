@@ -14,27 +14,9 @@ class NeuralModel():
     """
     def __init__(self, embedding_length:int = 300):
         self.network = nn.Sequential(
-            nn.Linear(embedding_length, 1000),
+            nn.Linear(embedding_length, 100),
             nn.Sigmoid(),
-            nn.Linear(1000, 1000),
-            nn.Sigmoid(),
-            nn.Linear(1000, 1000),
-            nn.Sigmoid(),
-            nn.Linear(1000, 1000),
-            nn.Sigmoid(),
-            nn.Linear(1000, 1000),
-            nn.Sigmoid(),
-            nn.Linear(1000, 1000),
-            nn.Sigmoid(),
-            nn.Linear(1000, 1000),
-            nn.Sigmoid(),
-            nn.Linear(1000, 1000),
-            nn.Sigmoid(),
-            nn.Linear(1000, 500),
-            nn.Sigmoid(),
-            nn.Linear(500, 250),
-            nn.Sigmoid(),
-            nn.Linear(250, 3),
+            nn.Linear(100, 2),
             nn.Softmax()
         )
     
