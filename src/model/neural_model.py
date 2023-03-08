@@ -9,15 +9,22 @@ import torch.nn as nn
 class NeuralModel():
     """
     Class for defining and handling our neural network.
+    ### NeuralModel:
+    network: nn.Sequential
     """
-    def __init__(self, embedding_length:int = 300):
+
+    def __init__(self, embedding_length: int = 300):
         self.network = nn.Sequential(
-            nn.Linear(embedding_length, 100),
+            nn.Linear(embedding_length, 1000),
             nn.Sigmoid(),
-            nn.Linear(100, 6),
+            nn.Linear(1000, 600),
+            nn.Sigmoid(),
+            nn.Linear(600, 200),
+            nn.Sigmoid(),
+            nn.Linear(200, 3),
             nn.Softmax()
         )
-    
+
     def define_network(self, new_network: nn.Sequential):
         """
         Manually overwrite the default network with your own model.

@@ -1,7 +1,7 @@
 import torch
-from delta_csv_carser import DeltaCsvParser
-from delta_dataset import DeltaDataset
-from delta_embedder import DeltaEmbedder
+from .delta_csv_parser import DeltaCsvParser
+from .delta_dataset import DeltaDataset
+from .delta_embedder import DeltaEmbedder
 from torch.utils.data import DataLoader
 
 class DeltaData():
