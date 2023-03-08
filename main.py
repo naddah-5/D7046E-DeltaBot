@@ -24,9 +24,9 @@ def main():
 
 
 if __name__ == '__main__':
-    main()
+    #main()
 
-    # model = NeuralModel()
-    # model.network.load_state_dict(torch.load('src/model/model.pt'))
-    # client = Client(model.network)
-    # client.run()
+    model = NeuralModel()
+    model.network.load_state_dict(torch.load('rating2.pt'))
+    client = Client(model.network)
+    client.run()
