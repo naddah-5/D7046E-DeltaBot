@@ -12,20 +12,21 @@ class Client():
         self.model = model
 
     def run(self):
-        review = input('Enter review: ')
-        processed_review = self.pre_processing(review)
         delta_embedder = DeltaEmbedder()
-        embedded_review = delta_embedder(processed_review, embedding_length=300)
-        with torch.no_grad():
+        while True :
+            review = input('Enter review: ')
+            processed_review = self.pre_processing(review)
+            embedded_review = delta_embedder(processed_review, embedding_length=300)
+            with torch.no_grad():
 
-            prediction = self.model(embedded_review)
-            predicted = prediction.argmax()
+                prediction = self.model(embedded_review)
+                predicted = prediction.argmax()
 
-            match predicted:
-                case 0:
-                    print("Bad")
-                case 1:
-                    print("Good")
+                match predicted:
+                    case 0:
+                        print("I would suggest that you rephrase your comment as it does not seem very helpful.")
+                    case 1:
+                        print("Great job on your helpful comment!")
 
     def pre_processing(self, review: str) -> list:
         formattedString = re.sub('<.*?>', 'link', review)

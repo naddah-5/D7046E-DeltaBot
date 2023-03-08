@@ -21,7 +21,7 @@ class NeuralModel():
             nn.Sigmoid(),
             nn.Linear(600, 200),
             nn.Sigmoid(),
-            nn.Linear(200, 3),
+            nn.Linear(200, 2),
             nn.Softmax()
         )
 
