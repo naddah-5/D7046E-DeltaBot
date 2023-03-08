@@ -67,7 +67,7 @@ class Train():
             correct_prediction : int = 0
             total_predictions :int = 0
 
-            for batch_nr, (data,labels) in enumerate(training_data):
+            for (data,labels) in training_data:
                 predictions = network(data)
                 loss = loss_function(predictions, labels)
                 loss.backward()
@@ -83,14 +83,14 @@ class Train():
                 batch_training_losses.append(loss.item())
 
                 print(
-                    f'\rEpoch {epoch+1} [{batch_nr+1}/{len(training_data)}] - Loss {loss}',
+                    f'\rEpoch {epoch+1} [{1+1}/{len(training_data)}] - Loss {loss}',
                     end=''
                     )
             print()
             correct_prediction: int = 0
             total_predictions: int = 0
 
-            for batch_nr, (data,labels) in enumerate(validation_data):
+            for (data,labels) in validation_data:
                 predictions = network(data)
                 predicted = list(prediction.argmax() for prediction in predictions)
                 correct_prediction += numpy.equal(predicted, labels).sum().item()

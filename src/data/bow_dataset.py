@@ -1,7 +1,11 @@
 import csv
+
+import nltk
 from nltk import word_tokenize
 from torch.utils.data import Dataset
 import numpy as np
+
+#nltk.download('punkt')
 
 class BoWEmbedderDataset(Dataset):
     def __init__(self, x, y):
@@ -28,8 +32,6 @@ def read_file_to_tensor_and_vocab(file_path):
                 print(f'Rows read: [{crow}]')
             message = row["Text"]
             label = row["HelpfulnessScore"]
-            message = word_tokenize(message)
-            message = [word.lower() for word in message if word.isalnum()]
             data.append((message, int(label)))
             vocab.update(message)
     
@@ -55,4 +57,4 @@ def bow_embedder(tokenized_sentence, vocab):
     for index, word in enumerate(vocab):
         if word in tokenized_sentence:
             bow[index] = 1
-    return 
+    return bow
