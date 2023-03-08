@@ -12,10 +12,10 @@ def main():
     """
     DATASET_PATH='src/data/dataset/Reviews.csv'
     neural_model = NeuralModel()
-    trainer = Train(epochs=10, batch_size=100)
+    trainer = Train(epochs=10, batch_size=10)
     data = DeltaData(embedder=DeltaEmbedder(), embedding_size=300,csv_proceed_path="src/data/dataset/output.csv")
 
-    trainer.run_training(dataset=data, network=neural_model.network, learning_rate=0.005)
+    trainer.run_training(dataset=data, network=neural_model.network, learning_rate=0.0001)
     neural_model.save_network("ranting2.pt")
 
 
