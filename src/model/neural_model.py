@@ -15,14 +15,14 @@ class NeuralModel():
 
     def __init__(self, embedding_length: int = 300):
         self.network = nn.Sequential(
-            nn.Linear(embedding_length, 1000),
+            nn.Linear(embedding_length, 500),
             nn.Sigmoid(),
-            nn.Linear(1000, 600),
+            nn.Dropout(0.25),
+            nn.Linear(500, 100),
             nn.Sigmoid(),
-            nn.Linear(600, 200),
-            nn.Sigmoid(),
-            nn.Linear(200, 2),
-            nn.Softmax()
+            nn.Dropout(0.25),
+            nn.Linear(100, 2),
+            nn.Softmax(dim=0)
         )
 
     def define_network(self, new_network: nn.Sequential):
