@@ -69,7 +69,7 @@ class Train():
 
                 batch_training_accuracies.append(accuracy)
                 batch_training_losses.append(loss.item())
-                if(batch_nr%100 ==0):
+                if(batch_nr%10 ==0):
                     print(
                         f'\rEpoch {epoch + 1} [{batch_nr + 1}/{len(training_data)}] - Loss {loss}',
                         end=''
@@ -90,13 +90,13 @@ class Train():
 
                     batch_validation_accuracies.append(accuracy)
                     batch_validation_losses.append(loss.item())
-                    if(batch_nr%100==0):
-                        print(f'\rThe accuracy of the model is {str(accuracy)[:4]}%.', end='')
+                    
+                    print(f'\rThe accuracy of the model is {str(accuracy)[:4]}%.', end='')
                 print()
 
                 if accuracy > self.best_accuracy:
                     print("Storing model")
-                    self.best_network = copy.deepcopy(network.state_dict())
+                    self.best_network = copy.deepcopy(network)
                     self.best_accuracy = accuracy
 
             validation_accuracies.append(sum(batch_validation_accuracies) / len(batch_validation_accuracies))
@@ -118,9 +118,8 @@ class Train():
             csv_writer.writerows(result)
         
         self.test_training(dataset=dataset,network=self.best_network)
-        
-        network.load_state_dict(self.best_network)
-        return network
+
+        return self.best_network
 
     def test_training(self, dataset: DeltaData, network: nn.Sequential):
         """

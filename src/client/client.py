@@ -40,4 +40,4 @@ class Client():
         # Tokenizing the review by words
         words = review.split()
 
-        return words
+        return str(words)
