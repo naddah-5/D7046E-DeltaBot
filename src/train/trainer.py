@@ -6,7 +6,6 @@ from src.data.bow_dataset import BoWEmbedderDataset
 import numpy
 import torch
 import torch.nn as nn
-from src.data.data import DeltaData
 import csv
 
 
@@ -132,7 +131,7 @@ class Train():
         return network
 
 
-    def test_training(self, dataset: DeltaData, network: nn.Sequential):
+    def test_training(self, dataset, network: nn.Sequential):
         """
         Method for running the test dataset on our model.
         """
