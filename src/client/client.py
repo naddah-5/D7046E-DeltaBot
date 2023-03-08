@@ -5,7 +5,6 @@ from torch import nn
 from src.data.delta_embedder import DeltaEmbedder
 
 
-
 class Client():
 
     def __init__(self, model: nn.Sequential):
@@ -13,7 +12,7 @@ class Client():
 
     def run(self):
         delta_embedder = DeltaEmbedder()
-        while True :
+        while True:
             review = input('Enter review: ')
             processed_review = self.pre_processing(review)
             embedded_review = delta_embedder(processed_review, embedding_length=300)
