@@ -12,29 +12,11 @@ class NeuralModel():
     ### NeuralModel:
     network: nn.Sequential
     """
-    def __init__(self, embedding_length:int = 300):
+    def __init__(self, embedding_length):
         self.network = nn.Sequential(
-            nn.Linear(embedding_length, 1000),
+            nn.Linear(embedding_length, 10),
             nn.Sigmoid(),
-            nn.Linear(1000, 1000),
-            nn.Sigmoid(),
-            nn.Linear(1000, 1000),
-            nn.Sigmoid(),
-            nn.Linear(1000, 1000),
-            nn.Sigmoid(),
-            nn.Linear(1000, 1000),
-            nn.Sigmoid(),
-            nn.Linear(1000, 1000),
-            nn.Sigmoid(),
-            nn.Linear(1000, 1000),
-            nn.Sigmoid(),
-            nn.Linear(1000, 1000),
-            nn.Sigmoid(),
-            nn.Linear(1000, 500),
-            nn.Sigmoid(),
-            nn.Linear(500, 250),
-            nn.Sigmoid(),
-            nn.Linear(250, 3),
+            nn.Linear(10, 2),
             nn.Softmax()
         )
     

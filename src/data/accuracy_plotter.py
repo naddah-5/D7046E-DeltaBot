@@ -9,14 +9,27 @@ with open('src/data/Accuracy_and_loss.csv', 'r') as csvfile:
     validation_accuracies = []
     training_accuracies = []
 
+    validation_losses = []
+    training_losses = []
+
     for row in data:
         validation_accuracies.append(float(row['validation_accuracy']))
         training_accuracies.append(float(row['training_accuracy']))
 
+        validation_losses.append(float(row['validation_loss']))
+        training_losses.append(float(row['training_loss']))
 
-plt.plot(validation_accuracies, label='Validation Accuracy')
-plt.plot(training_accuracies, label='Training Accuracy')
+
+fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(10, 5))
+
+ax1.plot(validation_accuracies, label='Validation Accuracy')
+ax1.plot(training_accuracies, label='Training Accuracy')
+
+ax2.plot(validation_losses, label='Validation loss')
+ax2.plot(training_losses, label='Training loss')
 
 
-plt.legend()
+ax1.legend()
+ax2.legend()
+
 plt.show()

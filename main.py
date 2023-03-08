@@ -14,7 +14,7 @@ def main():
     DATASET_PATH='src/data/dataset/Reviews.csv'
     
     trainer = Train(epochs=20, batch_size=8)
-    x_train, y_train, vocab = read_file_to_tensor_and_vocab("src/data/medium_sampled_dataset.csv")
+    x_train, y_train, vocab = read_file_to_tensor_and_vocab("src/data/dataset/sampled_dataset.csv")
     dataset = BoWEmbedderDataset(x_train, y_train)
     neural_model = NeuralModel(embedding_length=len(vocab))
 

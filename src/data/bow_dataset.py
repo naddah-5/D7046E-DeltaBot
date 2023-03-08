@@ -29,26 +29,26 @@ def read_file_to_tensor_and_vocab(file_path):
         for row in reader:
             crow = crow + 1
             if crow % 100 == 0:
-                print(f'Rows read: [{crow}]')
+                print(f'\rRows read: [{crow}]',end="")
             message = row["Text"]
             label = row["HelpfulnessScore"]
             data.append((message, int(label)))
             vocab.update(message)
-    
+    print()
     vocab = list(dict.fromkeys(vocab))
     vocab = sorted(list(vocab))  # Contains all words from the file as single words and without duplicates
-
+    print("Vocabulary size : ",len(vocab))
     x_train = []
     y_train = []
     ti = 0
     for (tokenized_sentence, label) in data:
         ti = ti + 1
         if ti % 1000 == 0:
-            print(f'Tokenized sentences: [{ti}]')
+            print(f'\rTokenized sentences: [{ti}]',end="")
         bow = bow_embedder(tokenized_sentence, vocab)
         x_train.append(bow)
         y_train.append(label)
-
+    print()
     return np.array(x_train), np.array(y_train), vocab
 
 
