@@ -12,11 +12,12 @@ def main():
     """
     DATASET_PATH='src/data/dataset/Reviews.csv'
     neural_model = NeuralModel()
+    neural_model.load_network("src/model/ranting2.pt")
     trainer = Train(epochs=10, batch_size=10)
-    data = DeltaData(embedder=DeltaEmbedder(), embedding_size=300,csv_proceed_path="src/data/dataset/output.csv")
+    data = DeltaData(embedder=DeltaEmbedder(), embedding_size=300,csv_proceed_path="src/data/dataset/sampled_data.csv")
 
-    trainer.run_training(dataset=data, network=neural_model.network, learning_rate=0.0001)
-    neural_model.save_network("ranting2.pt")
+    trainer.test_training(dataset=data, network=neural_model.network)
+    #trainer.test_training(dataset=data, network=neural_model.network, learning_rate=0.0001)
 
 
 if __name__=='__main__':
