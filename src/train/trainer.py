@@ -1,7 +1,7 @@
 """
 Training module.
 """
-
+import copy
 import numpy
 import torch
 import torch.nn as nn
@@ -27,7 +27,7 @@ class Train():
 
         self.batch_size = batch_size
         self.epochs = epochs
-        self.loss_function = loss_function.to(self.dev)
+        self.loss_function = loss_function
         self.best_network = None
         self.best_accuracy = 0
 
@@ -69,10 +69,9 @@ class Train():
                 total_predictions += len(predicted)
                 accuracy = correct_prediction / total_predictions * 100
 
-
                 batch_training_accuracies.append(accuracy)
                 batch_training_losses.append(loss.item())
-                if(batch_nr%10 ==0):
+                if (batch_nr % 10 == 0):
                     print(
                         f'\rEpoch {epoch + 1} [{batch_nr + 1}/{len(training_data)}] - Loss {loss}',
                         end=''
@@ -93,12 +92,12 @@ class Train():
                 batch_validation_accuracies.append(accuracy)
                 batch_validation_losses.append(loss.item())
 
-                print(f'\rThe accuracy of the model is {correct_prediction/total_predictions}', end='')
+                print(f'\rThe accuracy of the model is {correct_prediction / total_predictions}', end='')
             print()
 
             if accuracy > self.best_accuracy:
                 print("Storing model")
-                self.best_network = network.state_dict()
+                self.best_network = copy.deepcopy(network)
                 self.best_accuracy = accuracy
 
             validation_accuracies.append(sum(batch_validation_accuracies) / len(batch_validation_accuracies))
@@ -118,8 +117,8 @@ class Train():
                     [validation_accuracies[i], training_accuracies[i], validation_losses[i], training_losses[i]])
 
             csv_writer.writerows(result)
-        
-        self.test_training(dataset=dataset,network=self.best_network)
+
+        self.test_training(dataset=dataset, network=self.best_network)
 
         return self.best_network
 
@@ -134,13 +133,12 @@ class Train():
             correct_prediction: int = 0
             total_predictions: int = 0
 
-            for _ , (data, labels) in enumerate(testing_data):
+            for _, (data, labels) in enumerate(testing_data):
                 predictions = network(data)
                 predicted = list(prediction.argmax() for prediction in predictions)
                 correct_prediction += numpy.equal(predicted, labels).sum().item()
                 total_predictions += len(predicted)
 
-                accuracy = correct_prediction / total_predictions *100
-                accuracy = correct_prediction/total_predictions
-                print(f'\rThe accuracy of the model is {str(accuracy)[:4]}.',end="")
+                accuracy = correct_prediction / total_predictions * 100
+                print(f'\rThe accuracy of the model is {str(accuracy)[:4]}.', end="")
             print()
