@@ -31,20 +31,20 @@ class Train():
         self.epochs = epochs
         self.loss_function = loss_function.to(self.dev)
         self.best_network = None
-        self.best_accuracy = 0
+        self.best_accuracy: float = 0.0
     
 
-    def run_training(self, dataset: DeltaData, network: nn.Sequential, learning_rate: float = 0.0001):
+    def run_training(self, dataset: DeltaData, network: nn.Sequential, learning_rate: float = 0.05):
         """
         Method for training the specified model.
         """
         self.best_network = network.state_dict()
         loss_function = nn.CrossEntropyLoss()
 
-        optimizer: torch.optim.Adam = torch.optim.Adam(network.parameters(), learning_rate)
+        optimizer: torch.optim.Adamax = torch.optim.Adamax(network.parameters(), lr=learning_rate)
         
         training_data = dataset.get_training_loader(batch_size=self.batch_size,shuffle = True)
-        validation_data = dataset.get_validation_loader(batch_size=self.batch_size,shuffle = False)
+        validation_data = dataset.get_validation_loader(batch_size=self.batch_size,shuffle = True)
 
         validation_accuracies = []
         training_accuracies = []
@@ -60,6 +60,7 @@ class Train():
             correct_prediction : int = 0
             total_predictions :int = 0
 
+            network.train()
             for batch_nr, (data, labels) in enumerate(training_data):
                 predictions = network(data)
                 loss = loss_function(predictions, labels)
@@ -83,6 +84,7 @@ class Train():
             correct_prediction: int = 0
             total_predictions: int = 0
 
+            network.eval()
             for _, (data, labels) in enumerate(validation_data):
                 predictions = network(data)
                 predicted = list(prediction.argmax() for prediction in predictions)
@@ -102,7 +104,7 @@ class Train():
             if accuracy > self.best_accuracy:
                 print("Storing model")
                 self.best_network = network.state_dict()
-                self.best_accuracy = accuracy
+                self.best_accuracy = float(accuracy)
             
             validation_accuracies.append(sum(batch_validation_accuracies)/len(batch_validation_accuracies))
             training_accuracies.append(sum(batch_training_accuracies)/len(batch_training_accuracies))

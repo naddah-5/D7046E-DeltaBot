@@ -1,0 +1,6 @@
+nn.Sequential(
+            nn.Linear(embedding_length, 100),
+            nn.Sigmoid(),
+            nn.Linear(100, 3),
+            nn.Softmax(dim=1),
+        )
