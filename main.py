@@ -3,8 +3,8 @@ Main file, the orchestrator.
 """
 from src.model.neural_model import NeuralModel
 from src.train.trainer import Train
-from src.data.data import DeltaData
-from src.data.delta_embedder import DeltaEmbedder
+from src.data.bow_dataset import read_file_to_tensor_and_vocab
+from src.data.bow_dataset import BoWEmbedderDataset
 import torch
 
 def main():
@@ -12,11 +12,14 @@ def main():
     Orchestrator for running our training.
     """
     DATASET_PATH='src/data/dataset/Reviews.csv'
-    neural_model = NeuralModel()
+    
     trainer = Train(epochs=2, batch_size=8)
-    data = DeltaData(embedder=DeltaEmbedder(), embedding_size=300,csv_proceed_path="src/data/dataset/medium_sampled_dataset.csv")
+    x_train, y_train, vocab = read_file_to_tensor_and_vocab("src/data/dataset/medium_sampled_dataset.csv")
+    dataset = BoWEmbedderDataset(x_train, y_train)
+    neural_model = NeuralModel(embedding_length=len(vocab))
 
-    neural_model.network = trainer.run_training(dataset=data, network=neural_model.network, learning_rate=0.00001)
+    neural_model.network = trainer.run_training(dataset=dataset, network=neural_model.network, learning_rate=0.00001,batch_size = 10)
+
     neural_model.save_network('test_network.pt')
 
 def test_gpu() -> None:

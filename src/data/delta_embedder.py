@@ -8,7 +8,7 @@ import gensim.downloader as api
 
 class DeltaEmbedder:
     def __init__(self):
-        self.wv = api.load('word2vec-google-news-300')
+        pass
     
     def __call__(self,list : list, embedding_length : int) -> list:
 

@@ -1,33 +1,58 @@
 import csv
-from collections import Counter
-from src.data.bow_embedder import BoWEmbedder
-import torch
+from nltk import word_tokenize
 from torch.utils.data import Dataset
+import numpy as np
 
 class BoWEmbedderDataset(Dataset):
-    def __init__(self, csv_path, column_name = "HelpfulnessScore"):
-        super().__init__()
+    def __init__(self, x, y):
+        self.samples = len(x)
+        self.x = x
+        self.y = y
 
-        # Lecture du fichier CSV et comptage des mots
-        self.sentences = []
-        word_counts = Counter()
-        with open(csv_path, 'r') as f:
-            reader = csv.DictReader(f)
-            for row in reader:
-                sentence = row[column_name].split()
-                self.sentences.append(sentence)
-                word_counts.update(sentence)
-
-        # Création du dictionnaire word2idx
-        self.word2idx = {word: i for i, (word, count) in enumerate(word_counts.items())}
-
-        # Création de l'embedder BoW
-        self.embedder = BoWEmbedder(self.word2idx)
+    def __getitem__(self, index):
+        return self.x[index], self.y[index]
 
     def __len__(self):
-        return len(self.sentences)
+        return self.samples
+    
+def read_file_to_tensor_and_vocab(file_path):
+    data = []  # Contains sentence and class pairs (sentence as list of words)
+    vocab = set()
 
-    def __getitem__(self, idx):
-        sentence = self.sentences[idx]
-        bow = self.embedder(sentence)
-        return bow
+    crow = 0
+    with open(file_path, "r", encoding="UTF-8") as f:
+        reader = csv.DictReader(f)
+        for row in reader:
+            crow = crow + 1
+            if crow % 100 == 0:
+                print(f'Rows read: [{crow}]')
+            message = row["Text"]
+            label = row["HelpfulnessScore"]
+            message = word_tokenize(message)
+            message = [word.lower() for word in message if word.isalnum()]
+            data.append((message, int(label)))
+            vocab.update(message)
+    
+    vocab = list(dict.fromkeys(vocab))
+    vocab = sorted(list(vocab))  # Contains all words from the file as single words and without duplicates
+
+    x_train = []
+    y_train = []
+    ti = 0
+    for (tokenized_sentence, label) in data:
+        ti = ti + 1
+        if ti % 1000 == 0:
+            print(f'Tokenized sentences: [{ti}]')
+        bow = bow_embedder(tokenized_sentence, vocab)
+        x_train.append(bow)
+        y_train.append(label)
+
+    return np.array(x_train), np.array(y_train), vocab
+
+
+def bow_embedder(tokenized_sentence, vocab):
+    bow = np.zeros(len(vocab), dtype=np.float32)
+    for index, word in enumerate(vocab):
+        if word in tokenized_sentence:
+            bow[index] = 1
+    return 

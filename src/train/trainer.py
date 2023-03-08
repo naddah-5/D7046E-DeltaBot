@@ -2,6 +2,7 @@
 Training module.
 """
 
+from src.data.bow_dataset import BoWEmbedderDataset
 import numpy
 import torch
 import torch.nn as nn
@@ -34,7 +35,7 @@ class Train():
         self.best_accuracy = 0
     
 
-    def run_training(self, dataset: DeltaData, network: nn.Sequential, learning_rate: float = 0.0001):
+    def run_training(self, dataset: BoWEmbedderDataset, network: nn.Sequential, learning_rate: float = 0.0001,batch_size : int = 10):
         """
         Method for training the specified model.
         """
@@ -43,8 +44,14 @@ class Train():
 
         optimizer: torch.optim.Adam = torch.optim.Adam(network.parameters(), learning_rate)
         
-        training_data = dataset.get_training_loader(batch_size=self.batch_size,shuffle = True)
-        validation_data = dataset.get_validation_loader(batch_size=self.batch_size,shuffle = False)
+        train_size = int(len(dataset) * 0.8)
+        val_size = int(len(dataset) * 0.1)
+        test_size = len(dataset) -  train_size - val_size
+        train,val,test = torch.utils.data.random_split(dataset, [train_size, val_size,test_size])
+
+        training_data = torch.utils.data.DataLoader(train, batch_size=batch_size, shuffle=True)
+        validation_data = torch.utils.data.DataLoader(val, batch_size=batch_size, shuffle=True)
+        testing_data = torch.utils.data.DataLoader(test, batch_size=batch_size, shuffle=True)
 
         validation_accuracies = []
         training_accuracies = []
@@ -60,7 +67,7 @@ class Train():
             correct_prediction : int = 0
             total_predictions :int = 0
 
-            for batch_nr, (data, labels) in enumerate(training_data):
+            for batch_nr, (data,labels) in enumerate(training_data):
                 predictions = network(data)
                 loss = loss_function(predictions, labels)
                 loss.backward()
@@ -83,7 +90,7 @@ class Train():
             correct_prediction: int = 0
             total_predictions: int = 0
 
-            for _, (data, labels) in enumerate(validation_data):
+            for batch_nr, (data,labels) in enumerate(validation_data):
                 predictions = network(data)
                 predicted = list(prediction.argmax() for prediction in predictions)
                 correct_prediction += numpy.equal(predicted, labels).sum().item()
