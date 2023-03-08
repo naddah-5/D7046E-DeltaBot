@@ -27,11 +27,9 @@ class Client():
 
             match predicted:
                 case 0:
-                    print(0)
+                    print("Bad")
                 case 1:
-                    print(1)
-                case 2:
-                    print(2)
+                    print("Good")
 
     def pre_processing(self, review: str) -> list:
         formattedString = re.sub('<.*?>', 'link', review)

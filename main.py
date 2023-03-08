@@ -16,17 +16,17 @@ def main():
     """
     DATASET_PATH = 'src/data/dataset/Reviews.csv'
     neural_model = NeuralModel()
-    trainer = Train(epochs=10, batch_size=10)
-    data = DeltaData(embedder=DeltaEmbedder(), embedding_size=300,
-                     csv_proceed_path="src/data/dataset/Processed_Data_test_medium.csv")
+    trainer = Train(epochs=100, batch_size=10)
+    data = DeltaData(embedder=DeltaEmbedder(),
+                     embedding_size=300, csv_proceed_path="src/data/new_processed_data.csv")
 
     trainer.run_training(dataset=data, network=neural_model.network, learning_rate=0.01)
 
 
 if __name__ == '__main__':
-    # main()
+    main()
 
-    model = NeuralModel()
-    model.network.load_state_dict(torch.load('src/model/model.pt'))
-    client = Client(model.network)
-    client.run()
+    # model = NeuralModel()
+    # model.network.load_state_dict(torch.load('src/model/model.pt'))
+    # client = Client(model.network)
+    # client.run()
