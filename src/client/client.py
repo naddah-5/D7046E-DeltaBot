@@ -2,18 +2,14 @@ import re
 import nltk
 import torch
 from torch import nn
-from nltk.stem import PorterStemmer
-from nltk.corpus import stopwords
 from src.data.delta_embedder import DeltaEmbedder
 
-nltk.download('stopwords')
 
 
 class Client():
 
     def __init__(self, model: nn.Sequential):
         self.model = model
-        self.stemmer = PorterStemmer()
 
     def run(self):
         review = input('Enter review: ')
@@ -43,9 +39,4 @@ class Client():
         # Tokenizing the review by words
         words = review.split()
 
-        # Removing the stop words
-        filtered_words = [word for word in words if word not in set(stopwords.words('english'))]
-
-        stemmered_word = [self.stemmer.stem(word) for word in filtered_words]
-
-        return stemmered_word
+        return words
